@@ -1,3 +1,4 @@
+import { Player } from './../../model/player';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-player.page.scss'],
 })
 export class AddPlayerPage implements OnInit {
+
+  protected player:Player = new Player;
 
   constructor() { }
 
