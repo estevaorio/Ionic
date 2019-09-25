@@ -13,22 +13,26 @@ export class PlayerService {
     protected fire: AngularFirestore
   ) { }
 
-  save(player){
+  save(player) {
     return this.fire.collection("players")
-    .add({
-      nome:player.nome,
-      nickname:player.nickname,
-      email:player.email,
-      pws:player.pws,
-      ativo:true
-    });
- }
+      .add({
+        nome: player.nome,
+        nickname: player.nickname,
+        email: player.email,
+        pws: player.pws,
+        ativo: true
+      });
+  }
 
- getAll(){
-   return this.fire.collection("players").snapshotChanges().pipe(
-     map(dados =>
-       dados.map(d=>({Key:d.payload.doc.id, ...d.payload.doc.data()}))
-     )
-   )
- }
+  getAll() {
+    return this.fire.collection("players").snapshotChanges().pipe(
+      map(dados =>
+        dados.map(d => ({ key: d.payload.doc.id, ...d.payload.doc.data() }))
+      )
+    )
+  }
+
+  get(id) {
+    return this.fire.collection("players").doc<Player>(id).valueChanges();
+  }
 }
