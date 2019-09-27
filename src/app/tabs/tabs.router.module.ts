@@ -1,3 +1,4 @@
+import { ListGamePageModule } from './../pages/list-game/list-game.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
@@ -38,12 +39,32 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab3',
+        path: 'listgame',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+              import('../pages/list-game/list-game.module').then(m => m.ListGamePageModule)
+          }
+        ]
+      },
+      {
+        path: 'addGame',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/add-game/add-game.module').then(m => m.AddGamePageModule)
+          }
+        ]
+      },
+      {
+        path: 'perfilGame/:id',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../pages/perfil-game/perfil-game.module').then(m => m.PerfilGamePageModule)
           }
         ]
       },
