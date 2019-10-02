@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AddPlayerPage } from './add-player.page';
 
+import { Camera } from '@ionic-native/camera/ngx';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,8 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
   ],
+  providers:[Camera],
   declarations: [AddPlayerPage]
 })
 export class AddPlayerPageModule {}

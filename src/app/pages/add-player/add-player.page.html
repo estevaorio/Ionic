@@ -6,6 +6,11 @@
 </ion-header>
 
 <ion-content>
+    <ion-item lines="none" class="foto">
+        <img src="assets/silhueta.png" alt="foto perfil" (click)="tirarFoto()" *ngIf="!preview">
+        <img [src]="preview" alt="foto perfil" (click)="tirarFoto()" *ngIf="preview">
+    </ion-item>   
+    
     <form #fc="ngForm" (ngSubmit)="onsubmit(fc)">
         <ion-item>
             <ion-label position="floating">Nome</ion-label>
