@@ -1,3 +1,4 @@
+import { PlayerService } from './../services/player.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,16 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  protected quantPlayer:number = 0;
+
+  constructor(
+    protected playerService: PlayerService,
+  ) {
+    this.playerService.getAll().subscribe(
+       res =>{
+         this.quantPlayer = res.length
+       }
+    )
+  }
 
 }
