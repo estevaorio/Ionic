@@ -16,14 +16,10 @@ export class AddPlayerPage implements OnInit {
   protected player: Player = new Player;
   protected id: any = null;
   protected preview: any = null;
+  protected posLat: number = 0;
+  protected posLng: number = 0;
 
   constructor(
-    protected playerService: PlayerService,
-    protected alertController: AlertController,
-    protected activatedRoute: ActivatedRoute,
-    protected router: Router,
-    private camera: Camera,
-    private geolocation: Geolocation
   ) { }
 
   ngOnInit() {
@@ -32,10 +28,13 @@ export class AddPlayerPage implements OnInit {
       this.playerService.get(this.id).subscribe(
         res => {
           this.player = res
+          this.
         },
-        erro => this.id = null
+        //erro => this.id = null
       )
     }
+     //Localização atual
+     this.localAtual()
   }
 
   onsubmit(form) {
@@ -43,13 +42,9 @@ export class AddPlayerPage implements OnInit {
       this.presentAlert("Erro", "Adicione uma foto de perfil");
     } else {
       this.player.foto = this.preview;
-      this.geolocation.getCurrentPosition().then((resp) => {
-        this.player.lat = resp.coords.latitude
-        this.player.lng = resp.coords.longitude
-        console.log(this.player);
-       }).catch((error) => {
-         console.log('Error getting location', error);
-       });
+      this.player.lat = this.posLat;
+      this.player.lng = this.posLng;
+
       if (!this.id) {
         this.playerService.save(this.player).then(
           res => {
@@ -57,7 +52,7 @@ export class AddPlayerPage implements OnInit {
             this.player = new Player;
             //+console.log("Cadastrado!");
             this.presentAlert("Aviso", "Cadastrado!")
-            this.router.navigate(['/tabs/listPlayer']);
+            this.router.navigate(['/tabs/perfilPlayer', res.id]);
           },
           erro => {
             console.log("Erro: " + erro);
@@ -99,6 +94,19 @@ export class AddPlayerPage implements OnInit {
     }, (err) => {
       // Handle error
     });
+  }
+
+  localAtual(){
+    this.geolocation.getCurrentPosition().then(
+      resp => {
+      this.player.lat = resp.coords.latitude
+      this.player.lng = resp.coords.longitude
+      console.log(this.player);
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+      }
+    )
   }
 
   //Alerts-------------------
