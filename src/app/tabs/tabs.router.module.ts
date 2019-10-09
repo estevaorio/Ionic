@@ -39,7 +39,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'listgame',
+        path: 'listGame',
         children: [
           {
             path: '',

@@ -20,26 +20,32 @@ export class AddPlayerPage implements OnInit {
   protected posLng: number = 0;
 
   constructor(
+    protected playerService: PlayerService,
+    protected alertController: AlertController,
+    protected activedRoute: ActivatedRoute,
+    protected router: Router,
+    private camera: Camera,
+    private geolocation: Geolocation
   ) { }
 
   ngOnInit() {
-    this.id = this.activatedRoute.snapshot.paramMap.get("id");
+    this.id = this.activedRoute.snapshot.paramMap.get("id");
     if (this.id) {
       this.playerService.get(this.id).subscribe(
         res => {
           this.player = res
-          this.
+          this.preview = this.player.foto
         },
         //erro => this.id = null
       )
     }
-     //Localização atual
-     this.localAtual()
+    //Localização atual
+    this.localAtual()
   }
 
   onsubmit(form) {
     if (!this.preview) {
-      this.presentAlert("Erro", "Adicione uma foto de perfil");
+      this.presentAlert("Erro", "Deve inserir uma foto do perfil!");
     } else {
       this.player.foto = this.preview;
       this.player.lat = this.posLat;
@@ -50,7 +56,7 @@ export class AddPlayerPage implements OnInit {
           res => {
             form.reset();
             this.player = new Player;
-            //+console.log("Cadastrado!");
+            //console.log("Cadastrado!");
             this.presentAlert("Aviso", "Cadastrado!")
             this.router.navigate(['/tabs/perfilPlayer', res.id]);
           },
@@ -65,7 +71,7 @@ export class AddPlayerPage implements OnInit {
             form.reset();
             this.player = new Player;
             this.presentAlert("Aviso", "Atualizado!")
-            this.router.navigate(['/tabs/listPlayer']);
+            this.router.navigate(['/tabs/perfilPlayer', this.id]);
           },
           erro => {
             console.log("Erro: " + erro);
@@ -74,7 +80,6 @@ export class AddPlayerPage implements OnInit {
         )
       }
     }
-
   }
 
   tirarFoto() {
@@ -90,23 +95,20 @@ export class AddPlayerPage implements OnInit {
       // If it's base64 (DATA_URL):
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.preview = base64Image;
-      //console.log(base64Image);
     }, (err) => {
       // Handle error
     });
   }
 
-  localAtual(){
+  localAtual() {
     this.geolocation.getCurrentPosition().then(
       resp => {
-      this.player.lat = resp.coords.latitude
-      this.player.lng = resp.coords.longitude
-      console.log(this.player);
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
-      }
-    )
+        this.posLat = resp.coords.latitude;
+        this.posLng = resp.coords.longitude;
+      }).catch(
+        error => {
+          console.log('Não foi possivel pegar sua localização!', error);
+        });
   }
 
   //Alerts-------------------

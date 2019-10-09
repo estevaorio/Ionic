@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase/app';
 
 @Component({
   selector: 'app-login-usuario',
@@ -9,10 +8,11 @@ import { auth } from 'firebase/app';
 })
 export class LoginUsuarioPage implements OnInit {
 
-  protected email: string = ""
-  protected pws: string = ""
-
-  constructor() { }
+  protected email: string = "";
+  protected pws: string = "";
+  constructor(
+    public afAuth: AngularFireAuth
+  ) { }
 
   ngOnInit() {
   }
@@ -21,21 +21,20 @@ export class LoginUsuarioPage implements OnInit {
     this.login();
   }
 
-  login(){
-    this.afAuth.auth.signInWithEmailAndPassword(this.email,this.pws);
-    .then(
-      res =>{
-        console.log()res.user;
+  login() {
+    this.afAuth.auth.signInWithEmailAndPassword(this.email, this.pws).then(
+      res => {
+        console.log(res.user);
       },
       erro => {
         console.log("Erro: " + erro);
       }
     ).catch(erro=>{
-      console.log("Erro no sistema: " + erro)
+      console.log("Erro no sistema: "+ erro)
     })
   }
-  logout(){
+
+  logout() {
     this.afAuth.auth.signOut();
   }
-
 }

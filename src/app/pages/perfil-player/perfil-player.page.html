@@ -5,21 +5,21 @@
 </ion-header>
 
 <ion-content>
-  
+
   <ion-item lines="none">
       <img [src]="player.foto">
-
+      <!-- <img src="{{player.foto}}"> -->
   </ion-item>
 
-
- <ion-item>
-  <ion-text>
-  <h2>{{player.nome}}</h2>
-  <p>{{player.email}}</p>
-  <p>{{player.nickname}}</p>
-  <p>{{player.pws}}</p>
-  
- </ion-text>
-</ion-item>
-
+  <ion-item>
+    <ion-text>
+      <h2>{{player.nome}}</h2>
+      <p>{{player.email}}</p>
+      <p>{{player.nickname}}</p>
+      <p>{{player.pws}}</p>
+      <p>{{player.lat}}</p>
+      <p>{{player.lng}}</p>
+      <p>{{player.ativo}}</p>
+    </ion-text>
+  </ion-item>
 </ion-content>
