@@ -58,7 +58,7 @@ export class AddPlayerPage implements OnInit {
             this.player = new Player;
             //console.log("Cadastrado!");
             this.presentAlert("Aviso", "Cadastrado!")
-            this.router.navigate(['/tabs/perfilPlayer', res.id]);
+            this.router.navigate(['/']);
           },
           erro => {
             console.log("Erro: " + erro);

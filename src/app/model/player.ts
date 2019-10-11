@@ -1,5 +1,5 @@
 export class Player {
-    id:string;
+    //id:string;
     nome:string;
     nickname:string;
     email:string;
