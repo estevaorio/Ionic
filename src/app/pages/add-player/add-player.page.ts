@@ -2,7 +2,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { PlayerService } from './../../services/player.service';
 import { Player } from './../../model/player';
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
@@ -25,10 +25,16 @@ export class AddPlayerPage implements OnInit {
     protected activedRoute: ActivatedRoute,
     protected router: Router,
     private camera: Camera,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private platform: Platform
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    this.localAtual()
+    await this.platform.ready();
+    await this.loadMap()
+  
     this.id = this.activedRoute.snapshot.paramMap.get("id");
     if (this.id) {
       this.playerService.get(this.id).subscribe(

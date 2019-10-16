@@ -1,3 +1,4 @@
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -8,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
@@ -27,7 +29,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    Geolocation
+    Geolocation,
+    AndroidPermissions
   ],
   bootstrap: [AppComponent]
 })
