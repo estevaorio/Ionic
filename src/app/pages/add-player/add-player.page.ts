@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { PlayerService } from './../../services/player.service';
 import { Player } from './../../model/player';
@@ -5,6 +6,17 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  Marker,
+  MarkerCluster,
+  MyLocation,
+  LocationService
+} from '@ionic-native/google-maps';
+
 
 @Component({
   selector: 'app-add-player',
@@ -19,6 +31,8 @@ export class AddPlayerPage implements OnInit {
   protected posLat: number = 0;
   protected posLng: number = 0;
 
+  protected map: GoogleMap;
+
   constructor(
     protected playerService: PlayerService,
     protected alertController: AlertController,
@@ -30,11 +44,13 @@ export class AddPlayerPage implements OnInit {
   ) { }
 
   async ngOnInit() {
-
-    this.localAtual()
+    //Localização atual
+    this.localAtual();
+    //Plataforma e GoogleMaps
     await this.platform.ready();
-    await this.loadMap()
-  
+    await this.loadMap();
+
+    //Pega Id para autilaização dos dados do Player
     this.id = this.activedRoute.snapshot.paramMap.get("id");
     if (this.id) {
       this.playerService.get(this.id).subscribe(
@@ -45,8 +61,6 @@ export class AddPlayerPage implements OnInit {
         //erro => this.id = null
       )
     }
-    //Localização atual
-    this.localAtual()
   }
 
   onsubmit(form) {
@@ -56,7 +70,6 @@ export class AddPlayerPage implements OnInit {
       this.player.foto = this.preview;
       this.player.lat = this.posLat;
       this.player.lng = this.posLng;
-
       if (!this.id) {
         this.playerService.save(this.player).then(
           res => {
@@ -127,4 +140,65 @@ export class AddPlayerPage implements OnInit {
     });
     await alert.present();
   }
+
+  loadMap() {
+    this.map = GoogleMaps.create('map_canvas', {
+      'camera': {
+        'target': {
+          "lat": this.posLat,
+          "lng": this.posLng
+        },
+        'zoom': 15
+      }
+    });
+    //this.addCluster(this.dummyData());
+     this.minhaLocalizacao()
+
+  }
+  minhaLocalizacao(){
+    LocationService.getMyLocation().then(
+      (myLocation: MyLocation) =>{
+        this.map.setOptions({
+          camera:{
+            target: myLocation.latLng
+          }
+        })
+
+        let marker: Marker = this.map.addMarkerSync({
+          position: {
+            lat: myLocation.latLng.lat,
+            lng: myLocation.latLng.lng
+          },
+          icon: "#2fff00",
+          title: "Estevão",
+          snippet: "Estou aqui"
+        })
+
+        this.map.on(GoogleMapsEvent.MARKER_CLICK).subscribe(
+          res=>{
+            marker.setTitle(this.player.nome)
+            marker.setSnippet(this.player.nickname)
+            marker.showInfoWindow()
+          }
+          
+        )
+
+        this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(
+          res=>{
+            console.log(res)
+            this.map.addMarker({
+              position:{
+                lat:res[0].lat,
+                lng:res[0].lng
+            }
+          })
+
+          }
+        )
+          
+
+      }
+    )
+  }
+
 }

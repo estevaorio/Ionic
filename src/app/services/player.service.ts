@@ -29,8 +29,9 @@ export class PlayerService {
         lat:player.lat,
         lng:player.lng
       });
-  }
-)
+    }
+  )
+}
   
   
 

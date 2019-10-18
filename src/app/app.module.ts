@@ -16,6 +16,8 @@ import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Device } from '@ionic-native/device/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +32,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Geolocation,
+    GooglePlus,
+    Device,
     AndroidPermissions
   ],
   bootstrap: [AppComponent]
