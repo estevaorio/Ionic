@@ -13,6 +13,9 @@ const routes: Routes = [
   { path: 'perfil-game', loadChildren: './pages/perfil-game/perfil-game.module#PerfilGamePageModule' },
   { path: 'login-usuario', loadChildren: './pages/login-usuario/login-usuario.module#LoginUsuarioPageModule' },
   { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
+  { path: 'circle', loadChildren: './pages/circle/circle.module#CirclePageModule' },
+  { path: 'circle', loadChildren: './pages/circle/circle.module#CirclePageModule' },
+  { path: 'circle', loadChildren: './pages/circle/circle.module#CirclePageModule' },
   //{ path: 'add-player', loadChildren: './pages/add-player/add-player.module#AddPlayerPageModule' }
 ];
 @NgModule({

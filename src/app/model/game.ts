@@ -1,5 +1,5 @@
 export class Game {
-    id: string;
+    //id: string;
     nome : string;
     categoria : string; 
     console : string; 
@@ -7,5 +7,7 @@ export class Game {
     quant: number; 
     valor: number; 
     ativo:boolean = true;
-    fotos:string[]=[]; 
+    fotos:string[]=[];
+    lat:number =0;
+    lng:number =0; 
 }

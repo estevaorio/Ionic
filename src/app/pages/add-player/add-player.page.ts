@@ -186,12 +186,13 @@ export class AddPlayerPage implements OnInit {
         this.map.on(GoogleMapsEvent.MAP_CLICK).subscribe(
           res=>{
             console.log(res)
-            this.map.addMarker({
-              position:{
-                lat:res[0].lat,
-                lng:res[0].lng
-            }
-          })
+            //this.map.addMarker({
+             // position:{
+              //  lat:res[0].lat,
+               // lng:res[0].lng
+            //}
+         // })
+            marker.setPosition(res[0])
 
           }
         )

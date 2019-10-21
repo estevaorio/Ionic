@@ -3,6 +3,7 @@ import { Key } from 'protractor';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Game } from './../model/game';
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { Injectable } from '@angular/core';
 export class GameService {
 
   constructor(
-    protected fire: AngularFirestore
+    protected fire: AngularFirestore,
+    public afAuth: AngularFireAuth
   ) { }
 
   save(game) {
@@ -23,7 +25,9 @@ export class GameService {
         quantidade: game.quantidade,
         valor: game.valor,
         foto: game.foto,
-        ativo: true
+        ativo: true,
+        lat:game.lat,
+        lng:game.lng
       });
   }
 
